@@ -601,7 +601,6 @@ class PhoneInput extends React.Component {
   }
 
   handleFlagItemClick = (country, e) => {
-    alert('handleFlagItemClick, line 610')
     const newSelectedCountry = this.state.onlyCountries.find(o => o == country);
     if (!newSelectedCountry) return;
 
