@@ -814,7 +814,7 @@ class PhoneInput extends React.Component {
         >
           <div className={inputFlagClasses}/>
           <span className='country-name'>{this.getDropdownCountryName(country)}</span>
-          <span className='dial-code'>{'+' + country.format ? this.formatNumber(country.dialCode, country) : (prefix+country.dialCode)}</span>
+          <span className='dial-code'>{country.format ? "+" + this.formatNumber(country.dialCode, country) : "+" + (prefix+country.dialCode)}</span>
         </li>
       );
     });
