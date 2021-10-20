@@ -608,6 +608,7 @@ class PhoneInput extends React.Component {
       showDropdown: false,
       selectedCountry: newSelectedCountry,
       freezeSelection: true,
+      formattedNumber: null
     }, () => {
       this.cursorToEnd();
     });
