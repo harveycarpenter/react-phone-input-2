@@ -86,6 +86,7 @@ class PhoneInput extends React.Component {
     showDropdown: PropTypes.bool,
 
     onChange: PropTypes.func,
+    onChangeFlag: PropTypes.func,
     onFocus: PropTypes.func,
     onBlur: PropTypes.func,
     onClick: PropTypes.func,
@@ -601,7 +602,15 @@ class PhoneInput extends React.Component {
   }
 
   handleFlagItemClick = (country, e) => {
+
+    const { onChangeFlag } = this.props;
+
     const newSelectedCountry = this.state.onlyCountries.find(o => o == country);
+
+    if(onChangeFlag) {
+      onChangeFlag(newSelectedCountry)
+    }
+
     if (!newSelectedCountry) return;
 
     this.setState({
