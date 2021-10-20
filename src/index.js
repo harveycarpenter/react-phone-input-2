@@ -482,6 +482,7 @@ class PhoneInput extends React.Component {
   }
 
   handleFlagDropdownClick = (e) => {
+    alert('handling the flag dropdown click')
     e.preventDefault();
     if (!this.state.showDropdown && this.props.disabled) return;
     const { preferredCountries, selectedCountry } = this.state
