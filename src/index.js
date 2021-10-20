@@ -301,6 +301,7 @@ class PhoneInput extends React.Component {
 
   // Hooks for updated props
   updateCountry = (country) => {
+    alert('updateCountry() on line 303')
     const { onlyCountries } = this.state
     let newSelectedCountry;
     if (country.indexOf(0) >= '0' && country.indexOf(0) <= '9') { // digit
@@ -317,6 +318,7 @@ class PhoneInput extends React.Component {
   }
 
   updateFormattedNumber(value) {
+    alert('updateFormattedNumber on line 320');
     if (value === null) return this.setState({ selectedCountry: 0, formattedNumber: '' });
 
     const { onlyCountries, selectedCountry, hiddenAreaCodes } = this.state;
@@ -392,6 +394,7 @@ class PhoneInput extends React.Component {
   }
 
   formatNumber = (text, country) => {
+    alert('format number on line 396')
     if (!country) return text;
 
     const { format } = country;
@@ -482,7 +485,7 @@ class PhoneInput extends React.Component {
   }
 
   handleFlagDropdownClick = (e) => {
-    alert('handling the flag dropdown click')
+    alert('handleflagdropdownclick line 488')
     e.preventDefault();
     if (!this.state.showDropdown && this.props.disabled) return;
     const { preferredCountries, selectedCountry } = this.state
@@ -502,6 +505,7 @@ class PhoneInput extends React.Component {
   }
 
   handleInput = (e) => {
+    alert('handleinput line 508');
     const { value } = e.target;
     const { prefix, onChange } = this.props;
 
@@ -592,6 +596,7 @@ class PhoneInput extends React.Component {
   }
 
   handleInputClick = (e) => {
+    alert('handleinput click line 599');
     this.setState({ showDropdown: false });
     if (this.props.onClick) this.props.onClick(e, this.getCountryData());
   }
@@ -602,6 +607,7 @@ class PhoneInput extends React.Component {
   }
 
   handleFlagItemClick = (country, e) => {
+    alert('handleFlagItemClick, line 610')
     const currentSelectedCountry = this.state.selectedCountry;
     const newSelectedCountry = this.state.onlyCountries.find(o => o == country);
     if (!newSelectedCountry) return;
