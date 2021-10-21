@@ -9,11 +9,12 @@
     border-right: none;
     border-bottom: 1px solid #909090;
     border-radius: 0px;
-    margin-bottom: 1px;
     width: 100%;
     outline: none;
-    padding: 18.5px 14px 18.5px 58px;
+    padding: 9px 14px 0px 58px;
     transition: box-shadow ease .2s, border-color ease .2s;
+    height: 57px;
+    box-sizing: border-box;
 
     &:hover {
       border-color: #000;
@@ -21,12 +22,10 @@
     &:focus {
       border-color: #5791d4;
       border-width: 2px;
-      margin-bottom: 0px;
     }
     &.invalid-number {
       border-color: red;
       border-width: 2px;
-      margin-bottom: 0px;
       &:focus {}
       &+div:before {
         content: 'Error';
@@ -76,8 +75,7 @@
     }
     .flag {
       position: absolute;
-      top: 50%;
-      margin-top: -12px;
+      top: 21px;
     }
     .arrow {
       position: relative;
