@@ -54,6 +54,10 @@
     }
   }
   input[disabled] {
+    &:hover {
+      cursor: default !important;
+      border-bottom: 1px solid #909090;
+    }
     &+.flag-dropdown {
       &:hover {
         cursor: default;
