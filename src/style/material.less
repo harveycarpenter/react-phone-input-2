@@ -1,6 +1,11 @@
 @import "./common/high-res-flags.less";
 
 .react-tel-input {
+
+  .form-control::placeholder {
+    color: #a3a3a3;
+  }
+
   .form-control {
     font-size: 14px;
     background: #f8f8f8;
@@ -11,14 +16,13 @@
     border-radius: 0px;
     width: 100%;
     outline: none;
-    padding: 16px ​14px 5px 52px;
+    padding-top: 18px;
+    padding-right: 14px;
+    padding-bottom: 6px;
+    padding-left: 53px;
     transition: box-shadow ease .2s, border-color ease .2s;
     height: 57px;
     box-sizing: border-box;
-
-    ::placeholder {
-      color: #a3a3a3
-    }
 
     &:hover {
       border-color: #000;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import PhoneInput from '../../src/index';
-// import '../../src/style/material.less'; // enable on dev
+import '../../src/style/material.less'; // enable on dev
 
 
 class Demo extends React.Component {
@@ -9,7 +9,7 @@ class Demo extends React.Component {
 
   componentDidMount () {
     this.loadCSS('material') // disable on dev
-    // this.setState({ fetch: false }) // enable on dev
+    this.setState({ fetch: false }) // enable on dev
   }
 
   updateStyle = (e) => {
@@ -85,6 +85,7 @@ class Demo extends React.Component {
           <p>{"import 'react-phone-input-2/lib/"+currentStyle+".css'"}</p>
         </div>
       </div>
+      foo
     )
   }
 }
