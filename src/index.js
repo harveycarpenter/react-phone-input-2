@@ -31,7 +31,7 @@ class PhoneInput extends React.Component {
     buttonStyle: PropTypes.object,
     dropdownStyle: PropTypes.object,
     searchStyle: PropTypes.object,
-
+    specialLabelStyle: PropTypes.object,
     containerClass: PropTypes.string,
     inputClass: PropTypes.string,
     buttonClass: PropTypes.string,
@@ -118,6 +118,7 @@ class PhoneInput extends React.Component {
     inputStyle: {},
     buttonStyle: {},
     dropdownStyle: {},
+    specialLabelStyle: {},
     searchStyle: {},
 
     containerClass: '',
@@ -939,7 +940,7 @@ class PhoneInput extends React.Component {
     return (
       <div
         className={containerClasses}
-        style={this.props.style || this.props.containerStyle}
+        style={this.props.specialLabelStyle || this.props.containerStyle}
         onKeyDown={this.handleKeydown}>
         {specialLabel && <div className='special-label'>{specialLabel}</div>}
         {errorMessage && <div className='invalid-number-message'>{errorMessage}</div>}
