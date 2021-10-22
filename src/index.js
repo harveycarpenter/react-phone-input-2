@@ -227,6 +227,7 @@ class PhoneInput extends React.Component {
       freezeSelection: false,
       debouncedQueryStingSearcher: debounce(this.searchCountry, 250),
       searchValue: '',
+      focused: false
     };
   }
 
@@ -300,6 +301,12 @@ class PhoneInput extends React.Component {
     if (!bestGuess.name) return secondBestGuess;
     return bestGuess;
   });
+
+  setFocused = (focused) => {
+    this.setState({
+      focused: focused
+    })
+  }
 
   // Hooks for updated props
   updateCountry = (country) => {
@@ -625,6 +632,9 @@ class PhoneInput extends React.Component {
   }
 
   handleInputFocus = (e) => {
+
+    this.setFocused(true);
+    
     // if the input is blank, insert dial code of the selected country
     if (this.numberInputRef) {
       if (this.numberInputRef.value === this.props.prefix && this.state.selectedCountry && !this.props.disableCountryCode) {
@@ -641,6 +651,9 @@ class PhoneInput extends React.Component {
   }
 
   handleInputBlur = (e) => {
+
+    this.setFocused(true);
+
     if (!e.target.value) this.setState({ placeholder: this.props.placeholder });
     this.props.onBlur && this.props.onBlur(e, this.getCountryData());
   }
@@ -924,6 +937,7 @@ class PhoneInput extends React.Component {
       'form-control': true,
       'invalid-number': !isValidValue,
       'open': showDropdown,
+      'focused': this.state.focused
     });
     const selectedFlagClasses = classNames({
       'selected-flag': true,
