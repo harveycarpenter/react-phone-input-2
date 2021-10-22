@@ -814,8 +814,10 @@ class PhoneInput extends React.Component {
     }
 
     if(!this.state.focused) {
+      console.log('state not focused')
       return inputProps
     } else {
+      console.log('state focused')
       return {...inputProps, ...obj}
     }
   }
