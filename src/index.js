@@ -813,7 +813,7 @@ class PhoneInput extends React.Component {
       borderColor: focusColor
     }
 
-    if(!this.state.focus) {
+    if(!this.state.focused) {
       return inputProps
     } else {
       return {...inputProps, ...obj}
