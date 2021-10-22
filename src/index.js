@@ -809,6 +809,10 @@ class PhoneInput extends React.Component {
 
   getStyleAdjustedForFocus = () => {
 
+    if(!this.props.isValid) {
+        return {...this.props.inputStyle, ...{borderColor: "red"}}
+    }
+
     const primaryColor = this.props.primaryColor;
 
     if(this.state.focused && this.props.primaryColor) {
