@@ -36,6 +36,7 @@ class PhoneInput extends React.Component {
     inputClass: PropTypes.string,
     buttonClass: PropTypes.string,
     dropdownClass: PropTypes.string,
+    primaryColor: PropTypes.string,
     searchClass: PropTypes.string,
 
     autoFormat: PropTypes.bool,
@@ -125,6 +126,7 @@ class PhoneInput extends React.Component {
     inputClass: '',
     buttonClass: '',
     dropdownClass: '',
+    primaryColor: null,
     searchClass: '',
 
     autoFormat: true,
@@ -805,20 +807,14 @@ class PhoneInput extends React.Component {
     }
   }
 
-  getStyleAdjustedForFocus = (inputProps) => {
+  getStyleAdjustedForFocus = () => {
 
-    const focusColor = "purple";
+    const primaryColor = this.props.primaryColor;
 
-    const obj = {
-      borderColor: focusColor
-    }
-
-    if(!this.state.focused) {
-      console.log('state not focused')
-      return inputProps
+    if(this.state.focused && this.props.primaryColor) {
+      return {...this.props.inputStyle, ...{borderColor: primaryColor}}
     } else {
-      console.log('state focused')
-      return {...inputProps, ...obj}
+      return this.props.inputStyle
     }
   }
 
@@ -982,7 +978,7 @@ class PhoneInput extends React.Component {
         {errorMessage && <div className='invalid-number-message'>{errorMessage}</div>}
         <input
           className={inputClasses}
-          style={this.getStyleAdjustedForFocus(this.props.inputStyle)}
+          style={this.getStyleAdjustedForFocus()}
           onChange={this.handleInput}
           onClick={this.handleInputClick}
           onDoubleClick={this.handleDoubleClick}
