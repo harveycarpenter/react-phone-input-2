@@ -652,7 +652,7 @@ class PhoneInput extends React.Component {
 
   handleInputBlur = (e) => {
 
-    this.setFocused(true);
+    this.setFocused(false);
 
     if (!e.target.value) this.setState({ placeholder: this.props.placeholder });
     this.props.onBlur && this.props.onBlur(e, this.getCountryData());
