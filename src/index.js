@@ -980,7 +980,7 @@ class PhoneInput extends React.Component {
         {errorMessage && <div className='invalid-number-message'>{errorMessage}</div>}
         <input
           className={inputClasses}
-          style={getStyleAdjustedForFocus(this.props.inputStyle)}
+          style={this.getStyleAdjustedForFocus(this.props.inputStyle)}
           onChange={this.handleInput}
           onClick={this.handleInputClick}
           onDoubleClick={this.handleDoubleClick}
