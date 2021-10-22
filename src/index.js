@@ -805,6 +805,21 @@ class PhoneInput extends React.Component {
     }
   }
 
+  getStyleAdjustedForFocus = (inputProps) => {
+
+    const focusColor = "purple";
+
+    const obj = {
+      borderColor: focusColor
+    }
+
+    if(!this.state.focus) {
+      return inputProps
+    } else {
+      return {...inputProps, ...obj}
+    }
+  }
+
   getCountryDropdownList = () => {
     const { preferredCountries, highlightCountryIndex, showDropdown, searchValue } = this.state;
     const { disableDropdown, prefix } = this.props
@@ -951,6 +966,11 @@ class PhoneInput extends React.Component {
     });
     const inputFlagClasses = `flag ${selectedCountry && selectedCountry.iso2}`;
 
+    const focusedStyle = {
+      color: "red",
+      borderColor: "blue"
+    }
+
     return (
       <div
         className={containerClasses}
@@ -960,7 +980,7 @@ class PhoneInput extends React.Component {
         {errorMessage && <div className='invalid-number-message'>{errorMessage}</div>}
         <input
           className={inputClasses}
-          style={this.props.inputStyle}
+          style={getStyleAdjustedForFocus(this.props.inputStyle)}
           onChange={this.handleInput}
           onClick={this.handleInputClick}
           onDoubleClick={this.handleDoubleClick}
