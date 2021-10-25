@@ -1006,6 +1006,7 @@ class PhoneInput extends React.Component {
           <div
             onClick={disableDropdown ? undefined : this.handleFlagDropdownClick}
             className={selectedFlagClasses}
+            style={this.props.flagStyle}
             title={selectedCountry ? `${selectedCountry.name}: + ${selectedCountry.dialCode}` : ''}
             tabIndex={disableDropdown ? '-1' : '0'}
             role='button'
