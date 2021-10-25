@@ -189,14 +189,9 @@ class PhoneInput extends React.Component {
     let countryGuess;
 
     if (props.country) {
-      // Default country
-      // NOTE: this is what runs when it first boots
       countryGuess = onlyCountries.find(o => o.iso2 == props.country) || 0;
-      console.log('else if triggered so country set to', countryGuess)
     } else {
-      // Empty params
       countryGuess = 0;
-      console.log('final final else so set to', countryGuess)
     }
 
 
