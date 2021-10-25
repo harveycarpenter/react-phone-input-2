@@ -30,6 +30,7 @@ class PhoneInput extends React.Component {
     inputStyle: PropTypes.object,
     buttonStyle: PropTypes.object,
     dropdownStyle: PropTypes.object,
+    flagStyle: PropTypes.object,
     searchStyle: PropTypes.object,
     specialLabelStyle: PropTypes.object,
     containerClass: PropTypes.string,
@@ -118,6 +119,7 @@ class PhoneInput extends React.Component {
     containerStyle: {},
     inputStyle: {},
     buttonStyle: {},
+    flagStyle: {},
     dropdownStyle: {},
     specialLabelStyle: {},
     searchStyle: {},
@@ -999,7 +1001,7 @@ class PhoneInput extends React.Component {
           ref={el => this.dropdownContainerRef = el}
         >
           {renderStringAsFlag ?
-          <div className={selectedFlagClasses}>{renderStringAsFlag}</div>
+          <div className={selectedFlagClasses} style={this.props.flagStyle}>{renderStringAsFlag}</div>
           :
           <div
             onClick={disableDropdown ? undefined : this.handleFlagDropdownClick}
