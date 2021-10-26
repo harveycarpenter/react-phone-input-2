@@ -36,6 +36,7 @@ class PhoneInput extends React.Component {
     containerClass: PropTypes.string,
     inputClass: PropTypes.string,
     buttonClass: PropTypes.string,
+    placeholderColor: PropTypes.string,
     dropdownClass: PropTypes.string,
     primaryColor: PropTypes.string,
     searchClass: PropTypes.string,
@@ -995,7 +996,7 @@ class PhoneInput extends React.Component {
           {...this.props.inputProps}
         />
          {formattedNumber ? null : (
-        <div class="fakePlaceholder">{this.props.placeholder}</div>
+        <div class="fakePlaceholder" style={'color: ' + this.props.placeholderColor}>{this.props.placeholder}</div>
         )}
 
         <div

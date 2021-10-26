@@ -14,6 +14,7 @@ declare module "react-phone-input-2" {
     buttonClass?: string;
     dropdownClass?: string;
     searchClass?: string;
+    placeholderColor?: string;
 
     containerStyle?: React.CSSProperties;
     inputStyle?: React.CSSProperties;
