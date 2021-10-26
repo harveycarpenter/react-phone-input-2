@@ -977,6 +977,7 @@ class PhoneInput extends React.Component {
         onKeyDown={this.handleKeydown}>
         {specialLabel && <div className='special-label' style={this.props.specialLabelStyle}>{specialLabel}</div>}
         {errorMessage && <div className='invalid-number-message'>{errorMessage}</div>}
+       
         <input
           className={inputClasses}
           style={this.getStyleAdjustedForFocus()}
@@ -989,11 +990,13 @@ class PhoneInput extends React.Component {
           value={formattedNumber}
           ref={el => this.numberInputRef = el}
           onKeyDown={this.handleInputKeyDown}
-          placeholder={<span style="color: red">{this.props.placeholder}</span>}
           disabled={this.props.disabled}
           type='tel'
           {...this.props.inputProps}
         />
+         {formattedNumber ? null : (
+        <div class="fakePlaceholder">{this.props.placeholder}</div>
+        )}
 
         <div
           className={flagViewClasses}
