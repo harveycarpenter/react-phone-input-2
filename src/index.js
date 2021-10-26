@@ -989,7 +989,7 @@ class PhoneInput extends React.Component {
           value={formattedNumber}
           ref={el => this.numberInputRef = el}
           onKeyDown={this.handleInputKeyDown}
-          placeholder={this.props.placeholder}
+          placeholder={<span style="color: red">{this.props.placeholder}</span>}
           disabled={this.props.disabled}
           type='tel'
           {...this.props.inputProps}
