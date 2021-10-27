@@ -137,3 +137,25 @@ if (TARGET === 'build_css') {
     }
   });
 }
+
+  module.exports = merge(common, {
+    entry: [
+      './src/rawCountries.js',
+    ],
+    mode: 'production',
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: 'lib/[name].js',
+              }
+            }
+          ]
+        }
+      ]
+    }
+  });
