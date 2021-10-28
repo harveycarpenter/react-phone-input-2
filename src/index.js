@@ -852,7 +852,7 @@ class PhoneInput extends React.Component {
           {... highlight ? { "aria-selected": true } : {}}
         >
           <div className={inputFlagClasses}/>
-          <span className='country-name'>{this.getDropdownCountryName(country)}</span>
+          <span className='country-name' style={{color: "#242424"}}>{this.getDropdownCountryName(country)}</span>
           <span className='dial-code'>{country.format ? "+" + this.formatNumber(country.dialCode, country) : "+" + (prefix+country.dialCode)}</span>
         </li>
       );
