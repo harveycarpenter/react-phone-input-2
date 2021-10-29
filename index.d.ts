@@ -19,6 +19,7 @@ declare module "react-phone-input-2" {
     containerStyle?: React.CSSProperties;
     inputStyle?: React.CSSProperties;
     buttonStyle?: React.CSSProperties;
+    placeholderStyle?: React.CSSProperties;
     dropdownStyle?: React.CSSProperties;
     specialLabelStyle?: React.CSSProperties;
     searchStyle?: React.CSSProperties;
