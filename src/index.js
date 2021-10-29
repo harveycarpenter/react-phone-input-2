@@ -998,7 +998,7 @@ class PhoneInput extends React.Component {
           {...this.props.inputProps}
         />
          {formattedNumber ? null : (
-        <div class="fakePlaceholder" style={props.placeholderStyle}>{this.props.placeholder}</div>
+        <div class="fakePlaceholder" style={this.props.placeholderStyle}>{this.props.placeholder}</div>
         )}
 
         <div
