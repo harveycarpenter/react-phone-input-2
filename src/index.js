@@ -6,6 +6,7 @@ import reduce from 'lodash.reduce';
 import startsWith from 'lodash.startswith';
 import classNames from 'classnames';
 import './utils/prototypes'
+import trunkingNumbers from '../lib/trunkingNumbers.json';
 
 import CountryData from './CountryData.js';
 
@@ -513,11 +514,36 @@ class PhoneInput extends React.Component {
 
   handleInput = (e) => {
     const { value } = e.target;
-    const { prefix, onChange } = this.props;
+    const { prefix, onChange, disableCountryCode, countryCodeEditable } = this.props;
 
     let formattedNumber = this.props.disableCountryCode ? '' : prefix;
     let newSelectedCountry = this.state.selectedCountry;
     let freezeSelection = this.state.freezeSelection;
+
+    // Handle autofill for numbers when country code is disabled
+    if (e.nativeEvent && e.nativeEvent.inputType === 'insertFromPaste' && 
+        disableCountryCode && countryCodeEditable && 
+        newSelectedCountry) {
+      const countryConfig = trunkingNumbers[newSelectedCountry.iso2];
+      if (countryConfig) {
+        const numericValue = value.replace(/\D/g, '');
+        if (numericValue.startsWith(countryConfig.countryCode)) {
+          // Strip the country code and add trunking number
+          const localNumber = numericValue.slice(countryConfig.countryCode.length);
+          if (localNumber.startsWith(countryConfig.trunkingNumber)) {
+            formattedNumber = localNumber;
+          } else {
+            formattedNumber = countryConfig.trunkingNumber + localNumber;
+          }
+          
+          // Update state and call onChange
+          this.setState({ formattedNumber }, () => {
+            if (onChange) onChange(formattedNumber, this.getCountryData(), e, formattedNumber);
+          });
+          return;
+        }
+      }
+    }
 
     if (!this.props.countryCodeEditable) {
       const mainCode = newSelectedCountry.hasAreaCodes ?
@@ -525,25 +551,74 @@ class PhoneInput extends React.Component {
         newSelectedCountry.dialCode;
 
       const updatedInput = prefix+mainCode;
-      if (value.slice(0, updatedInput.length) !== updatedInput) return;
+      
+      // Handle both paste and autofill events
+      if (e.nativeEvent && (e.nativeEvent.inputType === 'insertFromPaste' || e.nativeEvent.inputType === 'insertReplacementText')) {
+        const numericValue = value.replace(/\D/g, '');
+        
+        // Handle numbers that start with the selected country code first
+        if (numericValue.startsWith(mainCode)) {
+          if (this.props.disableCountryCode) {
+            const countryConfig = trunkingNumbers[newSelectedCountry.iso2];
+            if (countryConfig) {
+              // Only apply trunking correction if the number doesn't already have the correct trunking number
+              const localNumber = numericValue.slice(mainCode.length);
+              if (localNumber.startsWith(countryConfig.trunkingNumber)) {
+                formattedNumber = this.formatNumber(localNumber, newSelectedCountry);
+              } else {
+                formattedNumber = this.formatNumber(countryConfig.trunkingNumber + localNumber, newSelectedCountry);
+              }
+            } else {
+              // For countries without trunking config, just strip the country code
+              formattedNumber = this.formatNumber(numericValue.slice(mainCode.length), newSelectedCountry);
+            }
+          } else {
+            formattedNumber = this.formatNumber(numericValue, newSelectedCountry);
+          }
+          
+          this.setState({ formattedNumber }, () => {
+            if (onChange) onChange(formattedNumber.replace(/[^0-9]+/g,''), this.getCountryData(), e, formattedNumber);
+          });
+          return;
+        }
+
+        // Special case for US/Canada numbers (10 digits) - only if they don't start with country code
+        if (newSelectedCountry.dialCode === '1' && numericValue.length === 10 && !numericValue.startsWith(mainCode)) {
+          if (this.props.disableCountryCode) {
+            formattedNumber = this.formatNumber(numericValue, newSelectedCountry);
+          } else {
+            formattedNumber = this.formatNumber(mainCode + numericValue, newSelectedCountry);
+          }
+          this.setState({ formattedNumber }, () => {
+            if (onChange) onChange(formattedNumber.replace(/[^0-9]+/g,''), this.getCountryData(), e, formattedNumber);
+          });
+          return;
+        }
+      }
+      
+      // Original behavior for non-autofill events
+      const valueToCompare = value.slice(0, updatedInput.length);
+      if (valueToCompare !== updatedInput) return;
     }
 
     if (value === prefix) {
-      // we should handle change when we delete the last digit
       if (onChange) onChange('', this.getCountryData(), e, '');
       return this.setState({ formattedNumber: '' });
     }
 
     // Does exceed default 15 digit phone number limit
-    if (value.replace(/\D/g, '').length > 15) {
+    const numericValue = value.replace(/\D/g, '');
+    if (numericValue.length > 15) {
       if (this.props.enableLongNumbers === false) return;
       if (typeof this.props.enableLongNumbers === 'number') {
-        if (value.replace(/\D/g, '').length > this.props.enableLongNumbers) return;
+        if (numericValue.length > this.props.enableLongNumbers) return;
       }
     }
 
     // if the input is the same as before, must be some special key like enter etc.
-    if (value === this.state.formattedNumber) return;
+    if (value === this.state.formattedNumber) {
+      return;
+    }
 
     // ie hack
     if (e.preventDefault) {
@@ -560,6 +635,24 @@ class PhoneInput extends React.Component {
     if (value.length > 0) {
       // before entering the number in new format, lets check if the dial code now matches some other country
       const inputNumber = value.replace(/\D/g, '');
+
+      // Check if the number starts with the country code
+      if (inputNumber.startsWith(selectedCountry.dialCode)) {
+        if (this.props.disableCountryCode) {
+          formattedNumber = this.formatNumber(inputNumber.slice(selectedCountry.dialCode.length), selectedCountry);
+        } else {
+          formattedNumber = this.formatNumber(inputNumber, selectedCountry);
+        }
+        
+        this.setState({
+          formattedNumber,
+          freezeSelection,
+          selectedCountry: selectedCountry,
+        }, () => {
+          if (onChange) onChange(formattedNumber.replace(/[^0-9]+/g,''), this.getCountryData(), e, formattedNumber);
+        });
+        return;
+      }
 
       // we don't need to send the whole number to guess the country... only the first 6 characters are enough
       // the guess country function can then use memoization much more effectively since the set of input it
@@ -910,6 +1003,7 @@ class PhoneInput extends React.Component {
               placeholder={searchPlaceholder}
               autoFocus={true}
               autoComplete={autocompleteSearch ? 'on' : 'off'}
+              autocomplete="tel"
               value={searchValue}
               onChange={this.handleSearchChange}
             />
