@@ -6,7 +6,7 @@ import reduce from 'lodash.reduce';
 import startsWith from 'lodash.startswith';
 import classNames from 'classnames';
 import './utils/prototypes'
-import trunkingNumbers from '../lib/trunkingNumbers.json';
+import trunkingNumbers from './trunkingNumbers.json';
 
 import CountryData from './CountryData.js';
 
